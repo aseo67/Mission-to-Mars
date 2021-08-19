@@ -2,12 +2,32 @@
 # Import dependencies
 from splinter import Browser
 from bs4 import BeautifulSoup as soup
-from webdriver_manager.chrome import ChromeDriverManager
 import pandas as pd
+import datetime as dt
+from webdriver_manager.chrome import ChromeDriverManager
 
-# Set up Splinter (executable path & URL for scraping)
-executable_path = {'executable_path': ChromeDriverManager().install()}
-browser = Browser('chrome', **executable_path, headless=False)
+# Define function for initializing browser, creating data dictionary, and ending WebDriver/returning scraped data
+def scrape_all():
+    # Initiate headless driver for deployment
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    browser = Browser('chrome', **executable_path, headless=True)
+
+    # Set news title & paragraph variables
+    news_title, news_paragraph = mars_news(browser)
+
+    # Run all scraping functions & store in dictionary
+    data = {
+      "news_title": news_title,
+      "news_paragraph": news_paragraph,
+      "featured_image": featured_image(browser),
+      "facts": mars_facts(),
+      "last_modified": dt.datetime.now()
+    }
+    
+    # Stop webdriver and return data
+    browser.quit()
+    return data
+
 
 # ### NASA News Titles and Paragraphs
 
@@ -42,6 +62,7 @@ def mars_news(browser):
     # Return
     return news_title, news_p
 
+
 # ### JPL Space Featured Image
 
 def featured_image(browser):
@@ -71,6 +92,7 @@ def featured_image(browser):
     # Return
     return img_url
 
+
 # ### Mars Fact Table
 
 def mars_facts():
@@ -88,5 +110,8 @@ def mars_facts():
     # Convert DataFrame to HTML-ready code
     return df.to_html()
 
-# Close automated browsing session
-browser.quit()
+
+# ### Tell Flask our script is complete and ready for action
+if __name__ == "__main__":
+    # If running as script, print scraped data
+    print(scrape_all())
