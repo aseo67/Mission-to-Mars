@@ -10,7 +10,7 @@ This analysis compiles information, news and images regarding Mars into one conv
 
 ## Summary
 ### Deliverable 1
-In addition to the code for scraping recent news about Mars, a facts table comparing Mars vs. Earth, and a featured image, further code has been added to scrape and store Mars Hemisphere Images. The corresponding URLs for the 4 hemispheres were retrieved. 
+In addition to the code for scraping recent news about Mars, a facts table comparing Mars vs. Earth, and a featured image, further code has been added to scrape and store Mars Hemisphere Images. The corresponding titles and URLs for the 4 hemispheres were retrieved. 
 
   ![Screenshot](https://github.com/aseo67/Mission-to-Mars/blob/main/Screenshot_Challenge_Image%20URLs.png)
  
